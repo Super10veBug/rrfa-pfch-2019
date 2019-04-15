@@ -23,8 +23,8 @@ result_list = []
 csv_columns = ['unittitle', 'container', 'extent', 'physfacet']
 csv_file = 'rrfa02_data.csv'
 
-# for did_headings in root.findall(".//{urn:isbn:1-931666-22-9}did"):
-for did_headings in root.findall(".//{urn:isbn:1-931666-22-9}c"):
+for did_headings in root.findall(".//{urn:isbn:1-931666-22-9}did"):
+# for did_headings in root.findall(".//{urn:isbn:1-931666-22-9}c"):
 	dictionary = {
 	"unittitle" : "",
 	"container" : "",
@@ -32,7 +32,8 @@ for did_headings in root.findall(".//{urn:isbn:1-931666-22-9}c"):
 	"physfacet" : ""
 	}
 	# attempting to find parent element of did_headings
-	print(did_headings.attrib['id'])
+	# Unfortunately, this takes any nesting titles and puts them in the same field.
+	# print(did_headings.attrib['id'])
 	for unittitle in did_headings.findall(".//{urn:isbn:1-931666-22-9}unittitle"):
 		dictionary['unittitle'] = dictionary['unittitle'] + unittitle.text + ' | '
 	for container in did_headings.findall(".//{urn:isbn:1-931666-22-9}container"):
