@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as etree
 import re
 import csv
+import pprint
 
 ElementTree = etree.parse('RRFA.01.TEST_ead.xml')
 
@@ -11,18 +12,36 @@ root = ElementTree.getroot()
 # csvwriter = csv.writer(rrfa01_data)
 
 result_list = []
+csv_columns = ['container', 'unittitle']
+csv_file = 'rrfa01_data.csv'
+
 # NEXT STEP IS TURN DATA INTO LIST, THEN DICTIONARIES SO, [{'unittitles' : []}, {'containers' :[]}
 for did_headings in root.findall(".//{urn:isbn:1-931666-22-9}did"):
+	dictionary = {
+	"container" : ""
+	}
 	for containers in did_headings.findall(".//{urn:isbn:1-931666-22-9}container"):
-		# print(append(containers.text)
-		for unittitles in did_headings.findall(".//{urn:isbn:1-931666-22-9}unittitle"):
-		# print(append(unittitles.text)
+		# this will not overwrite repeated fields, but add them instead
+		dictionary['container'] = dictionary['container'] + containers.text
+	for unittitles in did_headings.findall(".//{urn:isbn:1-931666-22-9}unittitle"):
+		dictionary['unittitle'] = unittitles.text
+	result_list.append(dictionary)
+	print(result_list)
 
-			# dictionary = {}
-   			#dictionary['containers.text'] = item.get('containers')
-   			#dictionary['unittitles.text'] = item.get('unittitles')
-			# result_list.append(dictionary)
-			# print(result_list)
+with open(csv_file, 'w') as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
+    writer.writeheader()
+    for data in result_list:
+    	writer.writerow(data)
+
+# except IOError:
+# 	print("I/O error") 
+
+
+
+	# dictionary['container'] = did_headings.get('containers')
+	# dictionary['unittitle'] = did_headings.get('unittitles')
+
 
 
 
