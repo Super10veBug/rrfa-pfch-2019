@@ -22,8 +22,8 @@ for did_headings in root.findall(".//{urn:isbn:1-931666-22-9}did"):
 	# for extent in did_headings.findall(".//{urn:isbn:1-931666-22-9}extent"):
 	# 	print(extent.text)
 		extent = did_headings.find(".//{urn:isbn:1-931666-22-9}extent")
-		
 		# make an if statement -- if no .text then print "-"
+		
 	# for container in did_headings.findall(".//{urn:isbn:1-931666-22-9}container"):
 	# 	print(container.text)
 	# for unittitle in did_headings.findall(".//{urn:isbn:1-931666-22-9}unittitle"):
