@@ -20,7 +20,7 @@ root = ElementTree.getroot()
 # 					print(e)
 
 result_list = []
-csv_columns = ['unittitle', 'container', 'extent', 'physfacet']
+csv_columns = ['unittitle', 'container', 'extent', 'physfacet', 'physloc']
 csv_file = 'rrfa02_data.csv'
 
 for did_headings in root.findall(".//{urn:isbn:1-931666-22-9}did"):
@@ -29,7 +29,8 @@ for did_headings in root.findall(".//{urn:isbn:1-931666-22-9}did"):
 	"unittitle" : "",
 	"container" : "",
 	"extent" : "",
-	"physfacet" : ""
+	"physfacet" : "",
+	"physloc" : ""
 	}
 	# attempting to find parent element of did_headings
 	# Unfortunately, this takes any nesting titles and puts them in the same field.
@@ -42,6 +43,8 @@ for did_headings in root.findall(".//{urn:isbn:1-931666-22-9}did"):
 		dictionary['extent'] = dictionary['extent'] + extent.text + ' | '
 	for physfacet in did_headings.findall(".//{urn:isbn:1-931666-22-9}physfacet"):
 		dictionary['physfacet'] = dictionary['physfacet'] + physfacet.text + ' | '
+	for physloc in did_headings.findall(".//{urn:isbn:1-931666-22-9}physloc"):
+		dictionary['physloc'] = dictionary['physloc'] + physloc.text + ' | '
 	result_list.append(dictionary)
 	print(result_list)
 
@@ -64,3 +67,6 @@ with open(csv_file, 'w') as csvfile:
 	# 	for x in pysc_desc_tags.findall(".//{urn:isbn:1-931666-22-9}c}"):
 	# 		print(x.text)
 	# THIS IS NOT DOING ANYTHING ANYMORE- HOW TO GET CONTAINER LIST
+
+	# add === physloc -- result is this only shows up for the collection level. Which is OK.
+	# for the container fields, the first returned result is the box, maybe i can make it say box : 
