@@ -20,14 +20,14 @@ root = ElementTree.getroot()
 # 					print(e)
 
 result_list = []
-csv_columns = ['unittitle', 'container', 'extent', 'physfacet', 'physloc']
+csv_columns = ['unittitle', 'container : box | object | Reg Number |', 'extent', 'physfacet', 'physloc']
 csv_file = 'rrfa02_data.csv'
 
 for did_headings in root.findall(".//{urn:isbn:1-931666-22-9}did"):
 # for did_headings in root.findall(".//{urn:isbn:1-931666-22-9}c"):
 	dictionary = {
 	"unittitle" : "",
-	"container" : "",
+	"container : box | object | Reg Number |" : "",
 	"extent" : "",
 	"physfacet" : "",
 	"physloc" : ""
@@ -38,7 +38,7 @@ for did_headings in root.findall(".//{urn:isbn:1-931666-22-9}did"):
 	for unittitle in did_headings.findall(".//{urn:isbn:1-931666-22-9}unittitle"):
 		dictionary['unittitle'] = dictionary['unittitle'] + unittitle.text + ' | '
 	for container in did_headings.findall(".//{urn:isbn:1-931666-22-9}container"):
-		dictionary['container'] = dictionary['container'] + container.text + ' | '
+		dictionary['container : box | object | Reg Number |'] = dictionary['container : box | object | Reg Number |'] + container.text + ' | '
 	for extent in did_headings.findall(".//{urn:isbn:1-931666-22-9}extent"):
 		dictionary['extent'] = dictionary['extent'] + extent.text + ' | '
 	for physfacet in did_headings.findall(".//{urn:isbn:1-931666-22-9}physfacet"):
@@ -54,13 +54,12 @@ with open(csv_file, 'w') as csvfile:
     for data in result_list:
     	writer.writerow(data)
 
-# 2 problems: 1. Nesting not translating to spreadsheet organization. 2. data in fields get lumped with no spaces
+# 
 # etree find parent for "did" in order to get a unique identifier from aspace 
 # find c and then did and then can get identifier
 
 
 # DELETED STUFF SECTION
-
 #extent = did_headings.find(".//{urn:isbn:1-931666-22-9}extent")
 # make an if statement -- if no .text then print "-"
 
