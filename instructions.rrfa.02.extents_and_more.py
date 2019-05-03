@@ -71,8 +71,16 @@ for did_headings in root.findall(".//{urn:isbn:1-931666-22-9}did"):
 	result_list.append(dictionary)
 	print(result_list)
 
-# with open(csv_file, 'w') as csvfile:
-#     writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
-#     writer.writeheader()
-#     for data in result_list:
-#     	writer.writerow(data)
+# the chunk of script beginning on line 76 is the CSV writing component. 
+# this should not change from script to script. 
+
+with open(csv_file, 'w') as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
+    writer.writeheader()
+    for data in result_list:
+    	writer.writerow(data)
+
+# Run the code through the terminal one last time with the CSV writing 
+# part and a file with the name we've chosen on line 43 should
+# appear in the same folder that this file is saved in.
+
